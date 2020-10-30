@@ -52,7 +52,7 @@ async function testInsertParallel (nums) {
 }
 
 async function testInsertArray (nums) {
-  if (nums.length > 9999) throw new Error('Arr cant be bigger than 999')
+  if (nums.length > 999) throw new Error('Arr cant be bigger than 999')
   const start = Date.now()
   await betterSqlite.insertManyNums(nums)
   const end = Date.now()
