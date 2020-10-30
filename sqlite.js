@@ -14,7 +14,7 @@ mkdirp.sync(tmpDir)
 SqliteFac.ctx = { root: '' }
 // database.run( 'PRAGMA journal_mode = WAL;' )
 const sqliteFac = new SqliteFac(SqliteFac, {
-  db: path.join(__dirname, 'tmp', 'test.db'),
+  db: path.join(__dirname, 'sqlite', 'test.db'),
   dirConf: path.join(__dirname, 'sqliteconf'),
   runSqlAtStart: [
     'CREATE TABLE IF NOT EXISTS numbers (number INT);',
