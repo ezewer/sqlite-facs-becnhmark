@@ -1,0 +1,30 @@
+{
+  "name": "sqlite-facs-benchmark",
+  "version": "0.0.1",
+  "description": "Benchmark between Bitfinex DB Sqlite and Better Sqlite Facilities",
+  "author": {
+    "name": "Ezequiel Wernicke",
+    "email": "wernicke.ezequiel@gmail.com"
+  },
+  "main": "index.js",
+  "keywords": [
+    "bitfinex"
+  ],
+  "scripts": {
+    "lint": "standard --env mocha"
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "bfx-facs-db-better-sqlite": "git+https://github.com/bitfinexcom/bfx-facs-db-better-sqlite.git",
+    "bfx-facs-db-sqlite": "git+https://github.com/bitfinexcom/bfx-facs-db-sqlite.git",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.2"
+  },
+  "engine": {
+    "node": ">=12.16.0"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "standard": "^14.3.4"
+  }
+}
