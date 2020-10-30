@@ -39,6 +39,8 @@ async function compare () {
     sqlite.findTakes
   )
   console.log('-----------------------------------')
+
+  process.exit(0)
 }
 
 function checkPerformance (fnc, bet, sql) {
