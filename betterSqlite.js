@@ -9,6 +9,12 @@ const rimraf = require('rimraf')
 const tmpDir = path.join(__dirname, 'better')
 const dbPathAbsolute = tmpDir
 const caller = { ctx: { root: __dirname } }
+const workerPathAbsolute = path.join(
+  __dirname,
+  'node_modules',
+  'bfx-facs-db-better-sqlite',
+  'test/extended-worker/index.js'
+)
 
 rimraf.sync(tmpDir)
 mkdirp.sync(tmpDir)
@@ -17,7 +23,7 @@ mkdirp.sync(tmpDir)
 // database.run( 'PRAGMA journal_mode = WAL;' )
 const betterFac = new BetterSqliteFac(
   caller,
-  { dbPathAbsolute, timeout: 20000 }
+  { dbPathAbsolute, workerPathAbsolute, timeout: 20000 }
 )
 
 async function startBetterSqlLite () {
@@ -69,6 +75,14 @@ async function insertManyNums (params) {
   })
 }
 
+async function insertManyNumsByTrans (params) {
+  return betterFac.asyncQuery({
+    action: 'RUN_IN_TRANS',
+    sql: 'INSERT INTO numbers(number) VALUES($number)',
+    params
+  })
+}
+
 async function findVals (params = []) {
   let sql = 'SELECT number FROM numbers'
   if (params.length) sql += ' WHERE number = ?'
@@ -85,5 +99,6 @@ module.exports = {
   insertNum,
   insertManyNums,
   findVals,
-  resetBetterSqlTable
+  resetBetterSqlTable,
+  insertManyNumsByTrans
 }

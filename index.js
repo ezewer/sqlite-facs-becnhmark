@@ -7,14 +7,16 @@ const sqlN = 'SqlLite3'
 
 async function compare () {
   const nums = new Array(999).fill().map((v, i) => i)
+  const transParams = new Array(1000000).fill()
+    .map((v, number) => ({ number }))
   console.log('-----------------------------------')
   console.log(`Test ${betN} Performance: `)
   console.log('')
-  const betterSqlite = await testBetterSqlitePerformance(nums)
+  const betterSqlite = await testBetterSqlitePerformance(nums, transParams)
   console.log('-----------------------------------')
   console.log(`Test ${sqlN} Performance: `)
   console.log('')
-  const sqlite = await testSqlitePerformance(nums)
+  const sqlite = await testSqlitePerformance(nums, transParams)
   console.log('-----------------------------------')
   console.log(`Comparison between ${betN} and ${sqlN} Performance: `)
   console.log('')
@@ -37,6 +39,11 @@ async function compare () {
     'Find All',
     betterSqlite.findTakes,
     sqlite.findTakes
+  )
+  checkPerformance(
+    'Array insertions by transaction',
+    betterSqlite.instArrByTransTakes,
+    sqlite.instArrByTransTakes
   )
   console.log('-----------------------------------')
 

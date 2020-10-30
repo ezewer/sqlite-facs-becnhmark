@@ -2,8 +2,10 @@
 
 const sqlite = require('./sqlite')
 
-async function testSqlitePerformance (nums) {
+async function testSqlitePerformance (nums, transParams) {
   // const nums = new Array(999).fill().map((v, i) => i) // 999
+  // const transParams = new Array(1000000).fill()
+  //   .map((v, number) => ({ number }))
   await sqlite.startSqlLite()
   const oneByOneTakes = await testInsertOneByOne(nums)
   console.log('oneByOneTakes: ', oneByOneTakes)
@@ -20,11 +22,15 @@ async function testSqlitePerformance (nums) {
   console.log('findTakes: ', findTakes)
   // Inserting the hole array at once is similar to performing just one insert.
   // Parallel is faster than synchronous
+
+  const instArrByTransTakes = await testInsertArrayByTrans(transParams)
+  console.log('instArrByTransTakes: ', instArrByTransTakes)
   return {
     oneByOneTakes,
     parallelTakes,
     instArrTakes,
-    findTakes
+    findTakes,
+    instArrByTransTakes
   }
 }
 
@@ -53,6 +59,13 @@ async function testInsertArray (nums) {
   if (nums.length > 999) throw new Error('Arr cant be bigger than 999')
   const start = Date.now()
   await sqlite.insertManyNums(nums)
+  const end = Date.now()
+  return end - start
+}
+
+async function testInsertArrayByTrans (params) {
+  const start = Date.now()
+  await sqlite.insertManyNumsByTrans(params)
   const end = Date.now()
   return end - start
 }
