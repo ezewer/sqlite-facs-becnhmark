@@ -34,7 +34,7 @@ async function compare () {
     sqlite.instArrTakes
   )
   checkPerformance(
-    'Find all takes',
+    'Find All',
     betterSqlite.findTakes,
     sqlite.findTakes
   )
