@@ -18,7 +18,8 @@
     "bfx-facs-db-better-sqlite": "git+https://github.com/bitfinexcom/bfx-facs-db-better-sqlite.git",
     "bfx-facs-db-sqlite": "git+https://github.com/bitfinexcom/bfx-facs-db-sqlite.git",
     "mkdirp": "^0.5.1",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "sqlite3": "^5.0.0"
   },
   "engine": {
     "node": ">=12.16.0"
