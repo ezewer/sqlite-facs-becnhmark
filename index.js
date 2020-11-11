@@ -1,8 +1,10 @@
 'use strict'
 
 const { testBetterSqlitePerformance } = require('./betterPerformance')
+const { testDirectBetterSqlitePerformance } = require('./directBetterPerformance')
 const { testSqlitePerformance } = require('./sqlitePerformance')
 const betN = 'Better-SqlLite3'
+const betD = 'Directly-Better-SqlLite3'
 const sqlN = 'SqlLite3'
 
 async function compare () {
@@ -11,6 +13,10 @@ async function compare () {
   console.log(`Test ${betN} Performance: `)
   console.log('')
   const betterSqlite = await testBetterSqlitePerformance(nums)
+  console.log('-----------------------------------')
+  console.log(`Test ${betD} Performance: `)
+  console.log('')
+  const directBetterSqlite = await testDirectBetterSqlitePerformance(nums)
   console.log('-----------------------------------')
   console.log(`Test ${sqlN} Performance: `)
   console.log('')
@@ -39,9 +45,33 @@ async function compare () {
     sqlite.findTakes
   )
   console.log('-----------------------------------')
+  console.log(`Comparison between ${betD} and ${sqlN} Performance: `)
+  console.log('')
+  checkPerformance(
+    'Simple insertions',
+    directBetterSqlite.oneByOneTakes,
+    sqlite.oneByOneTakes
+  )
+  checkPerformance(
+    'Parallel insertions',
+    directBetterSqlite.parallelTakes,
+    sqlite.parallelTakes
+  )
+  checkPerformance(
+    'Array insertions',
+    directBetterSqlite.instArrTakes,
+    sqlite.instArrTakes
+  )
+  checkPerformance(
+    'Find All',
+    directBetterSqlite.findTakes,
+    sqlite.findTakes
+  )
+  console.log('-----------------------------------')
 }
 
 function checkPerformance (fnc, bet, sql) {
+  if (bet === sql) return console.log(`In ${fnc}, performance is similar`)
   const faster = (bet < sql) ? betN : sqlN
   console.log(`In ${fnc}, ${faster} is ${getX(bet, sql)}`)
 }
